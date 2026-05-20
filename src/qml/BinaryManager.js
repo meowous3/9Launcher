@@ -20,7 +20,7 @@ function downloadDosbox(appData, path, downloader, fileIO) {
 }
 
 function downloadThcrap(appData, path, downloader, fileIO) {
-    if (fileIO.exists(appData + `/thcrap/repos`)) {
+    if (fileIO.exists(appData + `/thcrap/bin`)) {
         return false;
     }
     const url = `https://github.com/thpatch/thcrap/releases/download/2025-12-02/thcrap.zip`;
