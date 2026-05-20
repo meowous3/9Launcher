@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QProcess>
 #include <QStandardPaths>
+#include <qstringview.h>
 #ifdef Q_OS_LINUX
 #include <unistd.h>
 #endif
@@ -153,10 +154,11 @@ bool GameLauncher::LaunchThcrapThread(const QString &configPath, const QString &
     process.start();
     if (!process.waitForStarted()) {
         qCritical() << "[9L] Failed to start thcrap_loader!";
-        QString stdout = process.readAllStandardOutput();
-        QString stderr = process.readAllStandardError();
+        QByteArray stdout = process.readAllStandardOutput();
+        QByteArray stderr = process.readAllStandardError();
         qDebug() << "stdout:" << stdout;
         qDebug() << "stderr:" << stderr;
+
         launched = false;
         return false;
     }
