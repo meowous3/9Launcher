@@ -42,7 +42,7 @@ Button {
             fragmentShader: "/shaders/image_mask.frag.qsb"
             property real radius: 5
             property vector2d size: Qt.vector2d(gameImage.width, gameImage.height)
-            property bool grayscale: !parent.isInstalled
+            property real grayscale: button.isInstalled ? 0.0 : 1.0
         }
 
         Component.onCompleted: {
