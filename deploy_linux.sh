@@ -126,6 +126,11 @@ if [[ $create_package = true ]] ; then
   mkdir -p bin/usr/plugins/wayland-client
   cp $QT_ROOT_DIR/plugins/wayland-client/*.so bin/usr/plugins/wayland-client/
 
+  # linuxdeploy-plugin-qt doesn't deploy these, but the wayland platform plugin
+  # can't create an EGL/OpenGL surface without them and qFatals on startup
+  mkdir -p bin/usr/plugins/wayland-graphics-integration-client
+  cp $QT_ROOT_DIR/plugins/wayland-graphics-integration-client/*.so bin/usr/plugins/wayland-graphics-integration-client/
+
   cp $QT_ROOT_DIR/lib/libQt6WaylandClient.so* bin/usr/lib/
 
   echo '---- Running AppImage packager'
