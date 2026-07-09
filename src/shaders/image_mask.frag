@@ -10,7 +10,7 @@ layout(std140, binding = 0) uniform buf {
     float qt_Opacity;
     float radius;
     vec2 size;
-    bool grayscale;
+    float grayscale;
 };
 
 layout(binding = 1) uniform sampler2D source;
@@ -37,7 +37,7 @@ void main() {
     vec4 tex = texture(source, uv);
 
     float g = dot(tex.rgb, vec3(0.344, 0.5, 0.156));
-    vec3 color = mix(tex.rgb, vec3(g), float(grayscale));
+    vec3 color = mix(tex.rgb, vec3(g), grayscale);
 
     fragColor = vec4(color, tex.a) * qt_Opacity * inside;
 }
