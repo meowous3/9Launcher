@@ -154,10 +154,10 @@ bool GameLauncher::LaunchThcrapThread(const QString &configPath, const QString &
     process.start();
     if (!process.waitForStarted()) {
         qCritical() << "[9L] Failed to start thcrap_loader!";
-        QByteArray stdout = process.readAllStandardOutput();
-        QByteArray stderr = process.readAllStandardError();
-        qDebug() << "stdout:" << stdout;
-        qDebug() << "stderr:" << stderr;
+        QByteArray stdOut = process.readAllStandardOutput();
+        QByteArray stdErr = process.readAllStandardError();
+        qDebug() << "stdout:" << stdOut;
+        qDebug() << "stderr:" << stdErr;
 
         launched = false;
         return false;

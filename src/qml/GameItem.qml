@@ -23,6 +23,30 @@ Button {
         }
     }
 
+    function refreshInstalled() {
+        const path = StandardPaths.writableLocation(StandardPaths.AppDataLocation) + "/installed.json";
+
+        if (!fileIO.exists(path)) {
+            fileIO.write(path, '{ "installed": [] }');
+        }
+
+        const contents = fileIO.read(path)
+        if (!contents) {
+            throw new Error("Could not read contents!");
+        }
+
+        const items = JSON.parse(contents);
+
+        isInstalled = items.installed.some((game) => game.game_id == button.item.game_id);
+    }
+
+    Component.onCompleted: refreshInstalled()
+
+    Connections {
+        target: button.mainWindow
+        function onRefreshTriggerChanged() { button.refreshInstalled() }
+    }
+
     FileIO {
         id: fileIO
     }
@@ -43,27 +67,6 @@ Button {
             property real radius: 5
             property vector2d size: Qt.vector2d(gameImage.width, gameImage.height)
             property bool grayscale: !parent.isInstalled
-        }
-
-        Component.onCompleted: {
-            const path = StandardPaths.writableLocation(StandardPaths.AppDataLocation) + "/installed.json";
-
-            if (!fileIO.exists(path)) {
-                fileIO.write(path, '{ "installed": [] }');
-            }
-
-            const contents = fileIO.read(path)
-            if (!contents) {
-                throw new Error("Could not read contents!");
-            }
-
-            const items = JSON.parse(contents);
-
-            items.installed.forEach((item) => {
-                if (item.game_id == button.item.game_id) {
-                    button.isInstalled = true;
-                }
-            })
         }
     }
 
